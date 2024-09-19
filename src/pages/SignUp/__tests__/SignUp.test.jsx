@@ -1,11 +1,14 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import SignUp from "../SignUp";
 
+beforeEach(() => {
+  render(<SignUp />);
+
+});
+
 describe('Sign up structure', () => {
-  beforeEach(() => {
-    render(<SignUp />);
-  });
 
   it("renders correct heading", () => {
     expect(screen.getByRole("heading", { level: 1 }).textContent).toMatch(/Social Media/i);
@@ -32,17 +35,77 @@ describe('Sign up structure', () => {
   });
 });
 
-// sign up with confirmation
-// describe('Successful sign up', () => {
-//   expect(true).toMatch(true);
-// })
+describe('Sign up error flags', () => {
+  it("Missing username", async () => {
+    const user = userEvent.setup();
+    const button = screen.getByRole("button", { name: /submit/i });
+    await user.click(button);
+    expect(screen.getByTestId("username-error")).toHaveTextContent("Please enter a username");
+  })
 
-// sign up missing username
+  it("Missing password", async () => {
+    const user = userEvent.setup();
+    const button = screen.getByRole("button", { name: /submit/i });
+    await user.click(button);
+    expect(screen.getByTestId("password-error")).toHaveTextContent("Please enter a password");
+  })
 
-// sign up missing password
 
-// sign up missing confirm password
+  it("Missing confirm password", async () => {
+    const user = userEvent.setup();
+    const button = screen.getByRole("button", { name: /submit/i });
+    await user.click(button);
+    expect(screen.getByTestId("confirm-password-error")).toHaveTextContent("Please confirm your password");
+  })
 
-// sign up error signing up
+  it("Passwords do not match", async () => {
+    const user = userEvent.setup();
+
+    const password = screen.getByTestId("password")
+    await user.type(password, 'password123');
+
+    const confirmPassword = screen.getByTestId("confirm-password")
+    await user.type(confirmPassword, 'password456');
+
+    const button = screen.getByRole("button", { name: /submit/i });
+    await user.click(button);
+    expect(screen.getByTestId("confirm-password-error")).toHaveTextContent("Passwords do not match");
+  })
+})
+
+const mockedUsedNavigate = vi.fn();
+
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => mockedUsedNavigate,
+}));
+
+describe('SignUp Component', () => {
+  it('successful sign up', async () => {
+    const user = userEvent.setup();
+
+    const username = screen.getByLabelText(/username/i);
+    const password = screen.getByTestId("password");
+    const confirmPassword = screen.getByTestId("confirm-password");
+
+    await user.type(username, 'validUser');
+    await user.type(password, 'password123');
+    await user.type(confirmPassword, 'password123');
+
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+
+    expect(username).toHaveValue('');
+    expect(password).toHaveValue('');
+    expect(confirmPassword).toHaveValue('');
+
+    expect(mockedUsedNavigate).toHaveBeenCalledWith('/login', {
+      state: { signUpSuccessful: true }
+    });
+  });
+});
+
+
+
+
 
 
