@@ -1,13 +1,33 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, global } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+import Login from "../Login";
+
+const mockedUsedNavigate = vi.fn();
+vi.mock('react-router-dom', async (importOriginal) => {
+    const actual = await importOriginal();
+    return {
+        ...actual,
+        useNavigate: () => mockedUsedNavigate, 
+    };
+});
+
+const renderWithRouter = (ui, { route = "/" } = {}) => {
+    window.history.pushState({}, 'Test page', route);
+
+    return render(ui, { wrapper: MemoryRouter });
+};
+
+beforeEach(() => {
+    renderWithRouter(<Login />);
+})
 
 describe("Login", () => {
     it("true", () => {
         expect(true).toBe(true);
     })
 })
-/*
 
 describe("Login structure", () => {
     it("renders correct heading", () => {
@@ -37,27 +57,21 @@ describe("Login structure", () => {
 
 
 describe("Login error flags", () => {
-    // error for username
     it("Missing username", async () => {
         const user = userEvent.setup();
         const button = screen.getByRole("button", { name: /submit/i });
         await user.click(button);
         expect(screen.getByTestId("username-error")).toHaveTextContent("Please enter username");
     })
-    // error for password
+
     it("Missing password", async () => {
         const user = userEvent.setup();
-        const button = screen.getByRole("button", { name: /submit/i});
+        const button = screen.getByRole("button", { name: /submit/i });
         await user.click(button);
         expect(screen.getByTestId("password-error")).toHaveTextContent("Please enter password")
     })
 
-    // error for user does not exist
-
 })
 
-// mock user is successfull login
-
 // demo user success
-*/
 

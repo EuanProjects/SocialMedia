@@ -51,10 +51,13 @@ function Login() {
                 setUsernameError("User does not exist");
             }
         } catch (error) {
-            // Handle network or other errors
             console.error("Error during fetch:", error);
             setUsernameError("An unexpected error occurred. Please try again.");
         }
+    }
+
+    async function handleDemoUser() {
+        return true;
     }
 
     return (
@@ -93,8 +96,7 @@ function Login() {
                 </div>
                 <div>
                     <button type="submit">Submit</button>
-                    {/* Handle the Demo User button separately if needed */}
-                    {/* <button type="button" onClick={handleDemoUser}>Demo User</button> */}
+                    <button type="button" onClick={handleDemoUser}>Demo User</button>
                 </div>
             </form>
         </div>
