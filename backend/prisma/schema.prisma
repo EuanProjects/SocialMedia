@@ -14,35 +14,31 @@ datasource db {
 }
 
 model User {
-  id                String    @unique @id @default(uuid())
+  id                String    @id @default(uuid())
   privateId         Int       @unique @default(autoincrement())
-  picture           String?
+  picture           String
   username          String    @unique
   password          String
   friends           User[]    @relation("UserFriends")
   friendOf          User[]    @relation("UserFriends")
-  posts             Post[]    @relation("PostAuthor") 
-  likedPosts        Post[]    @relation("PostLikes")
+  posts             Post[]
   sentRequests      Request[] @relation("Requestor")
   receivedRequests  Request[] @relation("Accepter")
   comments          Comment[]
 }
 
 model Post {
-  id        String    @unique @id @default(uuid())
+  id        String    @id @default(uuid())
   privateId Int       @unique @default(autoincrement())
-  author    User      @relation(fields: [authorId], references: [id], name: "PostAuthor") 
-  authorId  String
-  caption   String?
-  picture   String?
+  picture   String
   comments  Comment[]
-  likes     User[]    @relation("PostLikes")
+  likes     User[]
   public    Boolean   @default(true)
   date      DateTime  @default(now())
 }
 
 model Request {
-  id          String @unique @id @default(uuid())
+  id          String @id @default(uuid())
   requestor   User   @relation("Requestor", fields: [requestorId], references: [id], onDelete: Cascade)
   requestorId String
   accepter    User   @relation("Accepter", fields: [accepterId], references: [id], onDelete: Cascade)
@@ -51,13 +47,10 @@ model Request {
 }
 
 model Comment {
-  id            String    @unique @id @default(uuid())
-  commenter     User      @relation(fields: [commenterId], references: [id])
-  commenterId   String
-  content       String
-  post          Post      @relation(fields: [postId], references: [id])
-  postId        String
-  parentComment Comment?  @relation("ParentChildComments", fields: [parentCommentId], references: [id])
-  parentCommentId String?
-  childComments Comment[] @relation("ParentChildComments")
+  id          String @id @default(uuid())
+  commenter   User   @relation(fields: [commenterId], references: [id])
+  commenterId String
+  content     String
+  post        Post    @relation(fields: [postId], references: [id])
+  postId      String
 }
