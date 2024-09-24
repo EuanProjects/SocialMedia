@@ -1,18 +1,17 @@
 // user.test.js
 const request = require('supertest');
 const express = require('express');
-const router = require('../routes/user'); // assuming your router is in the 'routes' folder
+const router = require('../routes/user');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const app = express();
-app.use(express.json()); // for parsing application/json
+app.use(express.json());
 app.use('/users', router);
 
 describe('POST /users', () => {
 
     beforeAll(async () => {
-        // Connect to the test database
         await prisma.$connect();
     });
 
@@ -31,14 +30,13 @@ describe('POST /users', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('id');
 
-        // Check that the user was added to the database
         const createdUser = await prisma.user.findUnique({
             where: { username: 'testuser' }
         });
-
         expect(createdUser).not.toBeNull();
         expect(createdUser.username).toBe('testuser');
-        userId = createdUser.id
+
+        userId = response.body.id;
     });
 
     it("should get user from the ID", async () => {
@@ -47,10 +45,41 @@ describe('POST /users', () => {
             .expect(200)
 
         expect(response.body).toMatchObject({
-            id: expect.any(String),
+            id: userId,
             username: 'testuser',
             picture: null
         });
+    })
 
+    it("should update user from the user ID", async () => {
+        const response = await request(app)
+            .put(`/users/${userId}`)
+            .send({ username: 'testuserupdated', picture: 'https://randomurl.com' })
+            .expect(200)
+
+        expect(response.body).toMatchObject({
+            id: userId,
+            username: 'testuserupdated',
+            picture: 'https://randomurl.com'
+        });
+
+        const updatedUser = await prisma.user.findUnique({
+            where: { id: userId }
+        });
+        expect(updatedUser).not.toBeNull();
+        expect(updatedUser.username).toBe('testuserupdated');
+        expect(updatedUser.picture).toBe('https://randomurl.com');
+    })
+
+    it("should delete user from the user ID", async () => {
+        const response = await request(app)
+            .delete(`/users/${userId}`)
+            .expect(200)
+
+        expect(response.body).toMatchObject({})
+        const updatedUser = await prisma.user.findUnique({
+            where: { id: userId }
+        });
+        expect(updatedUser).toBeNull();
     })
 });
