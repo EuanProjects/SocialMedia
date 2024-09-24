@@ -16,7 +16,7 @@ datasource db {
 model User {
   id                String    @id @default(uuid())
   privateId         Int       @unique @default(autoincrement())
-  picture           String?
+  picture           String
   username          String    @unique
   password          String
   friends           User[]    @relation("UserFriends")
@@ -30,7 +30,7 @@ model User {
 model Post {
   id        String    @id @default(uuid())
   privateId Int       @unique @default(autoincrement())
-  picture   String?
+  picture   String
   comments  Comment[]
   likes     User[]
   public    Boolean   @default(true)
