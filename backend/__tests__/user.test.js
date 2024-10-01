@@ -16,7 +16,6 @@ describe('POST /users', () => {
     });
 
     afterAll(async () => {
-        await prisma.user.deleteMany();
         await prisma.$disconnect();
     });
 
