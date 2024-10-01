@@ -61,62 +61,62 @@ describe('/request', () => {
         expect(true).toBe(true)
     })
 
-    // it('should create request and return ID', async () => {
-    //     const response = await requestApp(app)
-    //         .post('/request')
-    //         .send({
-    //             requestorId: user1Id,
-    //             accepterId: user2Id
-    //         })
+    it('should create request and return ID', async () => {
+        const response = await requestApp(app)
+            .post('/request')
+            .send({
+                requestorId: user1Id,
+                accepterId: user2Id
+            })
 
-    //     expect(response.body).toHaveProperty('id')
+        expect(response.body).toHaveProperty('id')
 
-    //     requestId2 = response.body.id
-    //     const request = await prisma.request.findUnique({
-    //         where: { id: requestId2 }
-    //     })
+        requestId2 = response.body.id
+        const request = await prisma.request.findUnique({
+            where: { id: requestId2 }
+        })
 
-    //     expect(request).not.toBeNull();
-    //     expect(request).toMatchObject({
-    //         id: requestId2,
-    //         requestorId: user1Id,
-    //         accepterId: user2Id
-    //     })
-    // })
+        expect(request).not.toBeNull();
+        expect(request).toMatchObject({
+            id: requestId2,
+            requestorId: user1Id,
+            accepterId: user2Id
+        })
+    })
 
-    // it(`should accept request`, async () => {
-    //     const requests = await prisma.request.findMany({})
-    //     const response = await requestApp(app)
-    //         .post('/request/accept')
-    //         .send({
-    //             id: requestId2
-    //         })
-    //         .expect(200)
-    //     expect(response.body).toMatchObject({
-    //         message: "Friend request accepted"
-    //     })
-    //     const user1 = await prisma.user.findUnique({
-    //         where: { id: user1Id },
-    //         include: { friends: true }
-    //     });
+    it(`should accept request`, async () => {
+        const requests = await prisma.request.findMany({})
+        const response = await requestApp(app)
+            .post('/request/accept')
+            .send({
+                id: requestId2
+            })
+            .expect(200)
+        expect(response.body).toMatchObject({
+            message: "Friend request accepted"
+        })
+        const user1 = await prisma.user.findUnique({
+            where: { id: user1Id },
+            include: { friends: true }
+        });
 
-    //     const user2 = await prisma.user.findUnique({
-    //         where: { id: user2Id },
-    //         include: { friends: true }
-    //     });
+        const user2 = await prisma.user.findUnique({
+            where: { id: user2Id },
+            include: { friends: true }
+        });
 
-    //     const areFriends = user1.friends.some(friend => friend.id === user2Id) &&
-    //         user2.friends.some(friend => friend.id === user1Id);
+        const areFriends = user1.friends.some(friend => friend.id === user2Id) &&
+            user2.friends.some(friend => friend.id === user1Id);
 
-    //     expect(areFriends).toBe(true)
-    // })
+        expect(areFriends).toBe(true)
+    })
 
-    // it('should delete request', async () => {
-    //     const requests = await prisma.request.findMany({})
-    //     const deleteResponse = await requestApp(app)
-    //         .delete(`/request/${requestId1}`)
-    //         .expect(200);
+    it('should delete request', async () => {
+        const requests = await prisma.request.findMany({})
+        const deleteResponse = await requestApp(app)
+            .delete(`/request/${requestId1}`)
+            .expect(200);
 
-    //     expect(deleteResponse.body).toMatchObject({});
-    // });
+        expect(deleteResponse.body).toMatchObject({});
+    });
 })
