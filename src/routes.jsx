@@ -4,31 +4,33 @@ import ErrorPage from "./pages/components/errorPage";
 import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile/Profile"
+import { signupPost } from "./pages/SignUp/signup.actions";  
 
 const routes = createBrowserRouter([
     {
         path: "/",
         children: [
             {
-                path:"/",
+                path: "/",
                 element: <App />
             },
             {
-                path:"/login",
+                path: "/login",
                 element: <Login />
             },
             {
-                path:"/sign-up",
-                element:<SignUp />
+                path: "/sign-up",
+                action: signupPost,
+                element: <SignUp />
             },
             {
-                profile:"/profile",
-                element:<Profile />
+                path: "/profile",
+                element: <Profile />
             }
         ],
         errorElement: <ErrorPage />,
     }
-])
+]);
 
 
   

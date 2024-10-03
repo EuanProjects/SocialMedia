@@ -5,6 +5,19 @@ const bcrypt = require("bcryptjs");
 
 
 exports.postUser = asyncHandler(async (req, res) => {
+    // see if the user exists first
+    const userExists = await prisma.user.findFirst({
+        where: {
+            username: req.body.username
+        }
+    })
+
+    if (userExists) {
+        return res.status(409).json({
+            error: "User already exists"
+        })
+    }
+
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
         const newUser = await prisma.user.create({
             data: {
