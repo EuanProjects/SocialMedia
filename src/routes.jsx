@@ -3,6 +3,7 @@ import App from "./App";
 import ErrorPage from "./pages/components/errorPage";
 import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
+import Profile from "./pages/Profile/Profile"
 
 const routes = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ const routes = createBrowserRouter([
             {
                 path:"/sign-up",
                 element:<SignUp />
+            },
+            {
+                profile:"/profile",
+                element:<Profile />
             }
         ],
         errorElement: <ErrorPage />,

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 function SignUp() {
+    const VITE_API_URL = import.meta.env.VITE_API_URL;
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -10,9 +11,7 @@ function SignUp() {
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-    const navigate = useNavigate();
-
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         if (username === "") {
             setUsernameError("Please enter a username");
@@ -35,8 +34,32 @@ function SignUp() {
             setUsername("");
             setPassword("");
             setConfirmPassword("");
-            navigate("/login", { state: { signUpSuccessful: true }})
+
+            // api call
+            try {
+                const response = await fetch(`${VITE_API_URL}/user`, {
+                    method: 'POST',
+                    body: JSON.stringify({ username, password }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+
+                console.log(response)
+    
+                if (response.ok) {
+                    redirect("/login", { state: { signUpSuccessful: true }})
+                } else {
+                    setUsernameError("User does not exist");
+                }
+            } catch (error) {
+                console.error("Error during fetch:", error);
+                setUsernameError("An unexpected error occurred. Please try again.");
+            }  
+
         }
+
+        
     }
 
     return (
@@ -70,6 +93,7 @@ function SignUp() {
                 </div>
                 <button type="submit">Submit</button>
             </form>
+            <Link to="/login">Log in</Link>
         </div>
     );
 }

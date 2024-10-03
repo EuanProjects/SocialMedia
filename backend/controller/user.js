@@ -1,15 +1,19 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 const asyncHandler = require("express-async-handler")
+const bcrypt = require("bcryptjs");
+
 
 exports.postUser = asyncHandler(async (req, res) => {
-    const newUser = await prisma.user.create({
-        data: {
-            username: req.body.username,
-            password: req.body.password
-        }
-    });
-    res.status(200).json({ id: newUser.id });
+    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+        const newUser = await prisma.user.create({
+            data: {
+                username: req.body.username,
+                password: hashedPassword
+            }
+        });
+        return res.status(200).json({ id: newUser.id });
+    })
 });
 
 exports.getUser = asyncHandler(async (req, res) => {

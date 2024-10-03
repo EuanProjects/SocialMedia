@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, Link, redirect } from "react-router-dom";
 
 function Login() {
+    const VITE_API_URL = import.meta.env.VITE_API_URL;
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
-
-    const navigate = useNavigate();
 
     const location = useLocation();
     const { signUpSuccessful } = location.state || {};
@@ -37,7 +37,7 @@ function Login() {
         }
 
         try {
-            const response = await fetch(`/api/login`, {
+            const response = await fetch(`${VITE_API_URL}/login`, {
                 method: 'POST',
                 body: JSON.stringify({ username, password }),
                 headers: {
@@ -45,10 +45,16 @@ function Login() {
                 }
             });
 
+            console.log(response.ok);
             if (response.ok) {
-                navigate("/profile");
+                console.log("here");
+               redirect("/profile");
             } else {
-                setUsernameError("User does not exist");
+                // handle if incorrect username
+
+                // handle if incorrect password
+                const body = await response.json()
+                setUsernameError(body.message);
             }
         } catch (error) {
             console.error("Error during fetch:", error);
@@ -99,6 +105,7 @@ function Login() {
                     <button type="button" onClick={handleDemoUser}>Demo User</button>
                 </div>
             </form>
+            <Link to="/sign-up">Sign up</Link>
         </div>
     );
 }

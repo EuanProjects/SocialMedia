@@ -53,6 +53,11 @@ describe("Login structure", () => {
         const button = screen.getByRole("button", { name: /demo user/i });
         expect(button).toHaveTextContent("Demo User");
     });
+
+    it("renders link to sign up", () => {
+        const link = screen.getByRole("link", { name: /sign up/i });
+        expect(link).toHaveTextContent("Sign up");
+    });
 })
 
 
