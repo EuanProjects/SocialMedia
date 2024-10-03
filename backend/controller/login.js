@@ -13,11 +13,11 @@ passport.use(
                 where: { username: username } 
             });
             if (!user) {
-                return done(null, false, { message: "Incorrect username" });
+                return done(null, false, { error: "Incorrect username" });
             };
             const match = await bcrypt.compare(password, user.password);
             if (!match) {
-                return done(null, false, { message: "Incorrect password" })
+                return done(null, false, { error: "Incorrect password" })
             }
             return done(null, user);
         } catch (err) {
@@ -46,7 +46,7 @@ passport.deserializeUser(async (id, done) => {
 exports.postLogin = asyncHandler(async (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if (err) {
-            return res.status(500).json({ message: 'An error occurred during authentication' });
+            return res.status(500).json({ error: 'An error occurred during authentication' });
         }
         if (!user) {
             return res.status(401).json(info);
@@ -54,12 +54,12 @@ exports.postLogin = asyncHandler(async (req, res, next) => {
 
         jwt.sign({ user: user }, "random", { expiresIn: '1h' }, (err, token) => {
             if (err) {
-                return res.status(500).json({ message: 'Failed to generate token' });
+                return res.status(500).json({ error: 'Failed to generate token' });
             }
             res.json({
                 token: token,
                 setup: user.setup,
-                userId: user.id
+                id: user.id
             });
         });
 

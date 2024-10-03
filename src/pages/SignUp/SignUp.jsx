@@ -12,7 +12,7 @@ function SignUp() {
     return (
         <div className="w-screen h-screen">
             <h1>Social Media</h1>
-            <Form method="post">
+            <Form method="POST">
                 <h2>Sign Up</h2>
                 {actionData?.error &&
                     <div>

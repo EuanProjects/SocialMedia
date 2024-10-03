@@ -1,14 +1,13 @@
 import { redirect } from "react-router-dom";
+const VITE_API_URL = import.meta.env.VITE_API_URL;
 
-const VITE_API_URL = import.meta.env.VITE_API_URL
-
-export async function signupPost ({ request }) {
+export async function loginPost({ request }) {
     const formData = await request.formData();
     const username = formData.get("username");
     const password = formData.get("password");
-
+    console.log("here");
     try {
-        const response = await fetch(`${VITE_API_URL}/user`, {
+        const response = await fetch(`${VITE_API_URL}/login`, {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: {
@@ -16,10 +15,10 @@ export async function signupPost ({ request }) {
             },
         });
 
-        console.log(response)
-
         if (response.ok) {
-            return redirect("/login?signUpSuccessful=true")
+            const data = await response.json();
+            localStorage.setItem('socmedtoken', data.token);
+            return redirect(`/profile/${data.id}`);
         } else {
             return (await response.json())
         }
