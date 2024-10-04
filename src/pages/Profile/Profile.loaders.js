@@ -1,7 +1,7 @@
 
 export async function profileLoader({ params }) {
     try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${params.profileID}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${params.profileId}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

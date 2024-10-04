@@ -7,6 +7,7 @@ import Profile from "./pages/Profile/Profile"
 import { signupPost } from "./pages/SignUp/SignUp.actions";  
 import { loginPost } from "./pages/Login/login.actions";
 import { profileLoader } from "./pages/Profile/profile.loaders";
+import { profileAction } from "./pages/Profile/Profile.actions";
 
 const routes = createBrowserRouter([
     {
@@ -27,8 +28,9 @@ const routes = createBrowserRouter([
                 element: <SignUp />
             },
             {
-                path: "/profile/:profileID",
+                path: "/profile/:profileId",
                 loader: profileLoader,
+                action: profileAction,
                 element: <Profile />,
             }
         ],
