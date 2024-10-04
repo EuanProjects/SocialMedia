@@ -35,7 +35,6 @@ exports.getComment = asyncHandler(async (req, res) => {
             error: "Could not find comment"
         })
     } else {
-        console.log("here")
         res.status(200).json(getComment)
     }
 })
