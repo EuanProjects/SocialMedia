@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         deepSpaceBlack: '#0B0C10',
-        2: '#FFFFFF',
+        astronautWhite: '#FFFFFF',
         metallicGray: '#4D4D4D',
         rocketRed: '#FF3B30',
         astralBlue: '#0077FF',
