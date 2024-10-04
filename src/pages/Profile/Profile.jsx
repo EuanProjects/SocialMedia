@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { Camera } from "react-feather";
-import { useLoaderData, Link } from "react-router-dom"
+import { useLoaderData, Link, useNavigate } from "react-router-dom"
 import PostModal from "./components/PostModal";
 import PostCard from "./components/PostCard";
 
 function Profile() {
     const data = useLoaderData();
     const [displayPostModal, setDisplayPostModal] = useState(false);
+    const navigate = useNavigate()
+
     function handleLogout() {
-        console.log('logged out');
+        localStorage.removeItem('socmedtoken')
+        navigate('/login')
     }
 
     function handleDisplayPostModal() {
         setDisplayPostModal(!displayPostModal)
     }
 
-    console.log(data)
 
     return (
         <>
