@@ -42,6 +42,8 @@ describe('/post', () => {
     it('true', () => {
         expect(true).toBe(true);
     })
+
+
     it('should create post and return ID', async () => {
         const response = await request(app)
             .post('/post')
@@ -65,6 +67,15 @@ describe('/post', () => {
         expect(createdPost).toMatchObject({
             id: postId,
         })
+    })
+
+    it('should return all the posts', async () => {
+        const response = await request(app)
+            .get('/post')
+            // .expect(200)
+
+        console.log(response.body)
+        expect(response.body).toHaveProperty('posts')
     })
 
     it('should get post from ID', async () => {

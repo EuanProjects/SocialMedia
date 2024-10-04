@@ -18,6 +18,23 @@ exports.postPost = asyncHandler(async (req, res) => {
     }
 })
 
+exports.getAllPost = asyncHandler(async (req, res) => {
+    console.log("here")
+    const getPosts = await prisma.post.findMany({
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            }
+        },
+        orderBy: {
+            date: 'desc'
+        }
+    })
+    res.status(200).json({posts: getPosts})
+})
+
 exports.getPost = asyncHandler(async (req, res) => {
     const getPost = await prisma.post.findUnique({
         where: {
