@@ -34,6 +34,7 @@ exports.getAllPost = asyncHandler(async (req, res) => {
                     username: true,
                 },
             },
+            comments: true
         },
     })
 
