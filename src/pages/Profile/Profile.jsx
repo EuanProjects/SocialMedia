@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Camera } from "react-feather";
 import { useLoaderData, Link, useNavigate } from "react-router-dom"
-import PostModal from "./components/PostModal";
+import PostFormModal from "./components/PostFormModal";
 import PostCard from "./components/PostCard";
 
 function Profile() {
     const data = useLoaderData();
-    const [displayPostModal, setDisplayPostModal] = useState(false);
+    const [displayPostFormModal, setDisplayPostFormModal] = useState(false);
     const navigate = useNavigate()
 
     function handleLogout() {
@@ -14,18 +14,18 @@ function Profile() {
         navigate('/login')
     }
 
-    function handleDisplayPostModal() {
-        setDisplayPostModal(!displayPostModal)
+    function handleDisplayPostFormModal() {
+        setDisplayPostFormModal(!displayPostFormModal)
     }
 
 
     return (
         <>
-            <div className="flex flex-col h-screen w-screen p-4 bg-deepSpaceBlack gap-4">
+            <div className="flex flex-col w-full p-4 bg-deepSpaceBlack gap-4">
                 {/* the post modal? */}
                 {
-                    displayPostModal &&
-                    <PostModal handleDisplayPostModal={handleDisplayPostModal} />
+                    displayPostFormModal &&
+                    <PostFormModal handleDisplayPostFormModal={handleDisplayPostFormModal} />
                 }
                 <div className="grid grid-cols-5">
                     <div className="col-span-1">
@@ -49,12 +49,12 @@ function Profile() {
 
                                 </Link>
                                 <button
-                                    onClick={() => handleDisplayPostModal()}
+                                    onClick={() => handleDisplayPostFormModal()}
                                     className="rounded-lg bg-astronautWhite w-full text-start px-4 text-deepSpaceBlack">What do you want to share?</button>
                             </div>
                             <div className="flex justify-center">
                                 <button
-                                    onClick={() => handleDisplayPostModal()}
+                                    onClick={() => handleDisplayPostFormModal()}
                                     className="flex gap-4 text-astronautWhite" > <Camera className="stroke-astronautWhite" /> Start a post</button>
                             </div>
                         </div>
