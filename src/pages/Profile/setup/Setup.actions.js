@@ -28,5 +28,4 @@ export async function setupAction({ params, request }) {
         console.error('Failed to setup profile:', error);
         return redirect(`/profile/${profileId}/setup`)
     }
-
 }

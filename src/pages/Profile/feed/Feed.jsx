@@ -1,17 +1,12 @@
 import { useState } from "react";
 import { Camera } from "react-feather";
-import { useLoaderData, Link, useNavigate } from "react-router-dom"
+import { useLoaderData, Link } from "react-router-dom"
 import PostFormModal from "../components/PostFormModal";
 import PostCard from "../components/PostCard";
+import Navbar from "../../components/Navbar";
 function Feed() {
     const data = useLoaderData();
     const [displayPostFormModal, setDisplayPostFormModal] = useState(false);
-    const navigate = useNavigate()
-
-    function handleLogout() {
-        localStorage.removeItem('socmedtoken')
-        navigate('/login')
-    }
 
     function handleDisplayPostFormModal() {
         setDisplayPostFormModal(!displayPostFormModal)
@@ -23,15 +18,8 @@ function Feed() {
             displayPostFormModal &&
             <PostFormModal handleDisplayPostFormModal={handleDisplayPostFormModal} />
         }
-        <div className="grid grid-cols-5">
-            <div className="col-span-1">
-                <h1 className="text-4xl font-bold text-astronautWhite">Social Media</h1>
-            </div>
-            <div className="grid col-span-4">
-                <button className="justify-self-end text-astronautWhite" onClick={handleLogout}>logout</button>
-            </div>
-        </div>
 
+        <Navbar />
 
         <div className="grid grid-cols-5">
             <div className="cols-span-1">

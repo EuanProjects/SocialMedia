@@ -11,6 +11,9 @@ import { profileAction } from "./pages/Profile/Profile.actions";
 import Setup from "./pages/Profile/setup/Setup";
 import Feed from "./pages/Profile/feed/Feed";
 import { setupAction } from "./pages/Profile/setup/Setup.actions";
+import Settings from "./pages/settings/Settings";
+import { settingsLoader } from "./pages/settings/settings.loaders";
+import { settingsAction } from "./pages/settings/settings.actions";
 
 const routes = createBrowserRouter([
     {
@@ -44,6 +47,12 @@ const routes = createBrowserRouter([
                         path: "setup",
                         element: <Setup />,
                         action: setupAction
+                    },
+                    {
+                        path: "settings",
+                        element: <Settings />,
+                        loader: settingsLoader,
+                        action: settingsAction
                     }
 
                 ]
