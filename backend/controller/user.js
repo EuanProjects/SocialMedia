@@ -22,7 +22,7 @@ exports.postUser = asyncHandler(async (req, res) => {
         const newUser = await prisma.user.create({
             data: {
                 username: req.body.username,
-                password: hashedPassword
+                password: hashedPassword,
             }
         });
         return res.status(200).json({ id: newUser.id });

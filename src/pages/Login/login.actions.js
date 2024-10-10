@@ -5,7 +5,6 @@ export async function loginPost({ request }) {
     const formData = await request.formData();
     const username = formData.get("username");
     const password = formData.get("password");
-    console.log("here");
     try {
         const response = await fetch(`${VITE_API_URL}/login`, {
             method: 'POST',
@@ -18,7 +17,12 @@ export async function loginPost({ request }) {
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('socmedtoken', data.token);
-            return redirect(`/profile/${data.id}`);
+            if (data.setup) {
+                return redirect(`/profile/${data.id}/feed`);
+            } else {
+                return redirect(`/profile/${data.id}/setup`)
+
+            }
         } else {
             return (await response.json())
         }
