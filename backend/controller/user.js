@@ -39,7 +39,8 @@ exports.getUser = asyncHandler(async (req, res) => {
     res.status(200).json({
         id: user.id,
         username: user.username,
-        picture: user.picture
+        picture: user.picture,
+        name: user.name
     })
 })
 
@@ -58,11 +59,88 @@ exports.putUser = asyncHandler(async (req, res) => {
 })
 
 exports.deleteUser = asyncHandler(async (req, res) => {
-    const deletedUser = await prisma.user.delete({
+    const userId = req.params.userId;
+  
+    await prisma.$transaction(async (prisma) => {
+      const likedPosts = await prisma.post.findMany({
         where: {
-            id: req.params.userId
-        }
-    })
-
-    res.status(200).json({})
-})
+          likes: {
+            some: {
+              id: userId,
+            },
+          },
+        },
+      });
+  
+      for (const post of likedPosts) {
+        await prisma.post.update({
+          where: { id: post.id },
+          data: {
+            likes: {
+              disconnect: { id: userId },
+            },
+          },
+        });
+      }
+  
+      await prisma.comment.deleteMany({
+        where: {
+          commenterId: userId,
+        },
+      });
+  
+      const userPosts = await prisma.post.findMany({
+        where: {
+          authorId: userId,
+        },
+      });
+  
+      for (const post of userPosts) {
+        await prisma.comment.deleteMany({
+          where: {
+            postId: post.id,
+          },
+        });
+      }
+  
+      await prisma.post.deleteMany({
+        where: {
+          authorId: userId,
+        },
+      });
+  
+      await prisma.request.deleteMany({
+        where: {
+          OR: [
+            { requestorId: userId },
+            { accepterId: userId },
+          ],
+        },
+      });
+  
+      const friends = await prisma.user.findMany({
+        where: {
+          friends: {
+            some: { id: userId },
+          },
+        },
+      });
+  
+      for (const friend of friends) {
+        await prisma.user.update({
+          where: { id: friend.id },
+          data: {
+            friends: {
+              disconnect: { id: userId },
+            },
+          },
+        });
+      }
+  
+      await prisma.user.delete({
+        where: { id: userId },
+      });
+    });
+  
+    res.status(200).json({});
+  });
