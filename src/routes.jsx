@@ -14,6 +14,12 @@ import { setupAction } from "./pages/Profile/setup/Setup.actions";
 import Settings from "./pages/settings/Settings";
 import { settingsLoader } from "./pages/settings/settings.loaders";
 import { settingsAction } from "./pages/settings/settings.actions";
+import Page from "./pages/Profile/page/Page";
+import Friends from "./pages/Profile/friends/Friends";
+import Home from "./pages/Profile/friends/Home";
+import FriendRequests from "./pages/Profile/friends/FriendRequests";
+import Suggestions from "./pages/Profile/friends/Suggested/Suggestions";
+import AllFriends from "./pages/Profile/friends/AllFriends";
 
 const routes = createBrowserRouter([
     {
@@ -53,8 +59,33 @@ const routes = createBrowserRouter([
                         element: <Settings />,
                         loader: settingsLoader,
                         action: settingsAction
+                    },
+                    {
+                        path: "page",
+                        element: <Page />,
+                    },
+                    {
+                        path: "friends",
+                        element: <Friends />,
+                        children: [
+                            {
+                                path: "",
+                                element: <Home />
+                            },
+                            {
+                                path: "friendrequests",
+                                element: <FriendRequests />
+                            },
+                            {
+                                path: "suggested",
+                                element: <Suggestions />
+                            },
+                            {
+                                path: "allfriends",
+                                element: <AllFriends />
+                            }
+                        ]
                     }
-
                 ]
             }
         ],
