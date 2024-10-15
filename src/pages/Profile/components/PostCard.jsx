@@ -62,7 +62,7 @@ function PostCard({ post }) {
                             {
                                 displayMenu &&
                                 <>
-                                    <div className="absolute bg-metallicGray border-metallicGray rounded-md p-4">
+                                    <div className="absolute bg-deepSpaceBlack border-metallicGray border-2 rounded-md p-4">
                                         <button onClick={handleDisplayEditPostModal}>Edit</button>
                                         <button onClick={handleDisplayDeleteModal}>Delete</button>
                                     </div>
@@ -98,7 +98,7 @@ function PostCard({ post }) {
                 }
                 {
                     displayDeleteModal &&
-                    <DeletePostModal handleDisplayDeleteModal={handleDisplayDeleteModal} postId={post.id} />
+                    <DeletePostModal handleDisplayDeleteModal={handleDisplayDeleteModal} postId={post.id} handleDisplayMenu={handleDisplayMenu}/>
                 }
             </div>
         </>
