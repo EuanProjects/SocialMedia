@@ -1,17 +1,32 @@
 export async function friendsLoader({ params }) {
     const profileId = params.profileId
     try {
-        const [users, requestsSent, requestsRecieved, friends] = await Promise.all([
+        const [users, requestsSent, requestsRecieved, friends, profile] = await Promise.all([
             getUsers(profileId),
             getRequestsSent(profileId),
             getRequestsRecieved(profileId),
-            getFriends(profileId)
+            getFriends(profileId),
+            getProfile(profileId)
         ]);
 
-        return { users: users, requestsSent: requestsSent, requestsRecieved: requestsRecieved, friends: friends};
+        return { users: users, requestsSent: requestsSent, requestsRecieved: requestsRecieved, friends: friends, profile: profile};
     } catch (error) {
         console.error('Failed to load profile and posts:', error);
         return { users: null, getRequestsSent: null, error: error.message };
+    }
+}
+
+async function getProfile(profileId) {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/user/${profileId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const user = await response.json();
+        return user;
+    } catch (error) {
+        console.error('Failed to load profile:', error);
+        return null;
     }
 }
 
