@@ -1,12 +1,18 @@
-import { useState } from "react"
-import { Home, MessageSquare, Settings } from "react-feather"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Home, LogOut, MessageSquare, Settings } from "react-feather"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 
 
 export default function Navbar() {
     const { profileId } = useParams()
     const [displayPopupMenu, setDisplayPopupMenu] = useState(false)
     const navigate = useNavigate()
+    const location = useLocation()
+
+    useEffect(() => {
+        setDisplayPopupMenu(false)
+    }, [location])
+
     function handleLogout() {
         localStorage.removeItem('socmedtoken')
         navigate('/login')
@@ -36,12 +42,12 @@ export default function Navbar() {
                         onClick={handleDisplayPopupMenu}
                         className="h-8 w-8 rounded-full bg-rocketRed absolute"></button>
                     {displayPopupMenu &&
-                        <div className="absolute w-64 top-10 bg-metallicGray rounded-md p-4 grid">
+                        <div className="absolute w-64 top-10 border-metallicGray border-2 rounded-md p-4 grid gap-2">
                             <div>
-                                <button className="flex justify-self-end text-astronautWhite gap-2" onClick={handleSettingsClick}><Settings />Settings</button>
+                                <button className="flex justify-self-end text-astronautWhite gap-2" onClick={handleSettingsClick}><Settings size={18}/>Settings</button>
                             </div>
                             <div >
-                                <button className="flex justify-self-end text-astronautWhite" onClick={handleLogout}>logout</button>
+                                <button className="flex justify-self-end text-astronautWhite gap-2" onClick={handleLogout}><LogOut size={18}/> logout</button>
                             </div>
                         </div>
                     }
