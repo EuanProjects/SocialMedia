@@ -28,7 +28,7 @@ function Login() {
                         <span className="text-green-500">Profile created!</span>
                     }
                     <div className="grid gap-2">
-                    <div className="grid gap-2">
+                        <div className="grid gap-2">
                             <label htmlFor="username" className="text-left font-bold pr-4">Username</label>
                             <input
                                 className="col-span-2 rounded-md px-2 text-deepSpaceBlack"

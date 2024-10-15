@@ -38,7 +38,7 @@ function PostCard({ post }) {
 
     return (
         <>
-            <div className="bg-metallicGray rounded-md shadow-md p-4 gap-4 flex flex-col">
+            <div className="border-metallicGray border-2 text-astronautWhite rounded-md shadow-md p-4 gap-4 flex flex-col">
                 <div className="flex gap-2 justify-between">
                     <div className="flex gap-2">
                         <div className="h-8 w-8 rounded-full bg-rocketRed"></div>
@@ -57,7 +57,7 @@ function PostCard({ post }) {
                         <div className="relative">
                             <button className=""
                                 onClick={handleDisplayMenu}>
-                                <MoreHorizontal />
+                                <MoreHorizontal className="stroke-astronautWhite fill-astronautWhite"/>
                             </button>
                             {
                                 displayMenu &&
