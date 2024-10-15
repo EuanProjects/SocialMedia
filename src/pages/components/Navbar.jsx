@@ -29,9 +29,9 @@ export default function Navbar() {
     return (
         <>
             <div className="grid grid-cols-5">
-                <div className="col-span-1">
+                <Link to={`/profile/${profileId}/feed`} className="col-span-1">
                     <h1 className="text-4xl font-bold text-astronautWhite">Social Media</h1>
-                </div>
+                </Link>
                 <div className="col-span-3 grid grid-cols-2 justify-center">
                     <Link to={`/profile/${profileId}/feed`} className="flex justify-center"><Home className="stroke-astronautWhite"/></Link>
                     <button disabled={true} className="flex justify-center"><MessageSquare className=" stroke-metallicGray" /></button>
@@ -42,7 +42,7 @@ export default function Navbar() {
                         onClick={handleDisplayPopupMenu}
                         className="h-8 w-8 rounded-full bg-rocketRed absolute"></button>
                     {displayPopupMenu &&
-                        <div className="absolute w-64 top-10 border-metallicGray border-2 rounded-md p-4 grid gap-2">
+                        <div className="absolute w-64 top-10 border-metallicGray border-2 rounded-md p-4 grid gap-2 bg-deepSpaceBlack">
                             <div>
                                 <button className="flex justify-self-end text-astronautWhite gap-2" onClick={handleSettingsClick}><Settings size={18}/>Settings</button>
                             </div>

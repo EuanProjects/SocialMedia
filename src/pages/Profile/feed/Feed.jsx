@@ -25,7 +25,7 @@ function Feed() {
 
                 <div className="col-span-3 flex flex-col gap-4">
                     {/* form for post */}
-                    <div className="flex flex-col rounded-md border-metallicGray border-2 text-white p-4 gap-4">
+                    <div className="flex flex-col rounded-md border-metallicGray border-2 text-astronautWhite p-4 gap-4">
                         <div className="flex gap-4">
                             <Link className="rounded-full h-8 w-8 bg-rocketRed">
 
