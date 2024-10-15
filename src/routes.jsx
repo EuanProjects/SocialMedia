@@ -24,6 +24,8 @@ import { suggestionsLoader } from "./pages/Profile/friends/Suggested/Suggestions
 import ProfilePage from "./pages/Profile/components/ProfilePage";
 import { friendsAction } from "./pages/Profile/friends/Friends.action";
 import { friendsLoader } from "./pages/Profile/friends/Friends.loader";
+import { pageLoader } from "./pages/Profile/page/Page.loader";
+import { pageAction } from "./pages/Profile/page/Page.actions";
 
 const routes = createBrowserRouter([
     {
@@ -67,6 +69,8 @@ const routes = createBrowserRouter([
                     {
                         path: "page",
                         element: <Page />,
+                        loader: pageLoader,
+                        action: pageAction
                     },
                     {
                         path: "friends",
