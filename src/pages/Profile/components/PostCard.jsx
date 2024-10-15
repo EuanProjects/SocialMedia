@@ -37,14 +37,14 @@ function PostCard({ post }) {
                     <div>{post?.picture}</div>
                 </div>
                 <div className={`grid ${grid} text-center`}>
-                    <div className="flex flex-grow items-center justify-center gap-2"><ThumbsUp size={16} /> Like</div>
+                    <div className="flex flex-grow items-center justify-center gap-2 invisible"><ThumbsUp size={16} /> Like</div>
                     <button
                         onClick={handleDisplayPostModal}
                         className="flex flex-grow items-center justify-center gap-2">
                         <MessageSquare size={16} /> Comment
                     </button>
                     {post?.public && (
-                        <button className="flex flex-grow items-center justify-center gap-2"><CornerUpRight size={16} /> Share</button>
+                        <button className="flex flex-grow items-center justify-center gap-2 invisible"><CornerUpRight size={16} /> Share</button>
                     )}
                 </div>
                 {

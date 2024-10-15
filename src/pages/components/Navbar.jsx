@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { Settings } from "react-feather"
-import { useNavigate, useParams } from "react-router-dom"
+import { Home, MessageSquare, Settings } from "react-feather"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 
 export default function Navbar() {
@@ -26,8 +26,10 @@ export default function Navbar() {
                 <div className="col-span-1">
                     <h1 className="text-4xl font-bold text-astronautWhite">Social Media</h1>
                 </div>
-                <div className="col-span-3">
-
+                <div className="col-span-3 grid grid-cols-2 justify-center">
+                    <Link to={`/profile/${profileId}/feed`} className="flex justify-center"><Home className="stroke-astronautWhite"/></Link>
+                    <button disabled={true} className="flex justify-center"><MessageSquare className=" stroke-metallicGray" /></button>
+                    {/* add coming soon */}
                 </div>
                 <div className="col-span-1 flex justify-end relative">
                     <button
