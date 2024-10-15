@@ -20,7 +20,7 @@ export default function DeletePostModal({ handleDisplayDeleteModal, postId, hand
                     <input className="hidden" type="text" name="postId" value={postId}readOnly/>
                     <div className="grid grid-cols-2 w-full gap-2 pt-2">
                         <button
-                            onClick={handleDisplayDeleteModal}
+                            onClick={handleCloseModal}
                             className="bg-astralBlue text-white rounded-md p-2 w-full"
                         >
                             Cancel

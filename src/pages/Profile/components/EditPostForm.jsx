@@ -21,7 +21,7 @@ export default function EditPostForm({ post, handleDisplayEditPostFormModal, han
                         <h2 className="text-center">Edit {post.author.username}'s Post</h2>
                         <button
                             className="absolute top-0 right-0 rounded-full"
-                            onClick={handleDisplayEditPostFormModal}
+                            onClick={handleCloseModal}
                         >
                             <X />
                         </button>
