@@ -19,22 +19,28 @@ model User {
   picture           String?
   username          String    @unique
   password          String
+  name              String    @default("")
   friends           User[]    @relation("UserFriends")
   friendOf          User[]    @relation("UserFriends")
   posts             Post[]
   sentRequests      Request[] @relation("Requestor")
   receivedRequests  Request[] @relation("Accepter")
   comments          Comment[]
+  likedPosts        Post[]    @relation("Likes")
+  setup             Boolean   @default(false)
 }
 
 model Post {
   id        String    @id @default(uuid())
   privateId Int       @unique @default(autoincrement())
   picture   String?
+  caption   String?
   comments  Comment[]
-  likes     User[]
+  likes     User[]    @relation("Likes")
   public    Boolean   @default(true)
   date      DateTime  @default(now())
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String
 }
 
 model Request {
@@ -47,10 +53,13 @@ model Request {
 }
 
 model Comment {
-  id          String @id @default(uuid())
-  commenter   User   @relation(fields: [commenterId], references: [id])
-  commenterId String
-  content     String
-  post        Post    @relation(fields: [postId], references: [id])
-  postId      String
+  id            String   @id @default(uuid())
+  commenter     User     @relation(fields: [commenterId], references: [id])
+  commenterId   String
+  content       String
+  post          Post     @relation(fields: [postId], references: [id])
+  postId        String
+  parentComment Comment? @relation("ParentComment", fields: [parentCommentId], references: [id])
+  parentCommentId String?
+  childComments Comment[] @relation("ParentComment")
 }
