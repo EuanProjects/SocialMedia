@@ -21,7 +21,7 @@ export default function Page() {
                         </div>
 
                     </div>
-                    <div className="col-span-2 p-2">
+                    <div className="col-span-2 p-2 flex flex-col gap-2">
                         {
                             
                             posts && posts.posts
