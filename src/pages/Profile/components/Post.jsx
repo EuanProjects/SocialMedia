@@ -41,7 +41,7 @@ function Post({ post, handleDisplayPostModal }) {
                         }
                     </div>
                     <div className={`grid ${grid} text-center`}>
-                        <div className="flex flex-grow items-center justify-center gap-2"><ThumbsUp size={16} /> Like</div>
+                        <div className="flex flex-grow items-center justify-center gap-2 invisible"><ThumbsUp size={16} /> Like</div>
                         {/* focus on the comment field */}
                         <button
                             onClick={handleDisplayPostModal}
@@ -49,7 +49,7 @@ function Post({ post, handleDisplayPostModal }) {
                             <MessageSquare size={16} /> Comment
                         </button>
                         {post?.public && (
-                            <button className="flex flex-grow items-center justify-center gap-2"><CornerUpRight size={16} /> Share</button>
+                            <button className="flex flex-grow items-center justify-center gap-2 invisible"><CornerUpRight size={16} /> Share</button>
                         )}
                     </div>
                 </div>

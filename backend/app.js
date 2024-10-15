@@ -9,6 +9,7 @@ const usersRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 const commentRouter = require('./routes/comment');
 const loginRouter = require('./routes/login')
+const requestRouter = require('./routes/request');
 
 
 const app = express();
@@ -25,5 +26,6 @@ app.use('/user', usersRouter);
 app.use('/post', postRouter)
 app.use('/comment', commentRouter)
 app.use('/login', loginRouter)
+app.use('/request', requestRouter)
 
 module.exports = app;

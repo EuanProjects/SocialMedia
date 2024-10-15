@@ -20,6 +20,10 @@ import Home from "./pages/Profile/friends/Home";
 import FriendRequests from "./pages/Profile/friends/FriendRequests";
 import Suggestions from "./pages/Profile/friends/Suggested/Suggestions";
 import AllFriends from "./pages/Profile/friends/AllFriends";
+import { suggestionsLoader } from "./pages/Profile/friends/Suggested/Suggestions.loader";
+import ProfilePage from "./pages/Profile/components/ProfilePage";
+import { friendsAction } from "./pages/Profile/friends/Friends.action";
+import { friendsLoader } from "./pages/Profile/friends/Friends.loader";
 
 const routes = createBrowserRouter([
     {
@@ -41,11 +45,11 @@ const routes = createBrowserRouter([
             },
             {
                 path: "/profile/:profileId",
-                element: <Profile/>,   
+                element: <Profile />,
                 children: [
                     {
                         path: "feed",
-                        element: <Feed/>,
+                        element: <Feed />,
                         loader: profileLoader,
                         action: profileAction,
                     },
@@ -67,24 +71,34 @@ const routes = createBrowserRouter([
                     {
                         path: "friends",
                         element: <Friends />,
-                        children: [
-                            {
-                                path: "",
-                                element: <Home />
-                            },
-                            {
-                                path: "friendrequests",
-                                element: <FriendRequests />
-                            },
-                            {
-                                path: "suggested",
-                                element: <Suggestions />
-                            },
-                            {
-                                path: "allfriends",
-                                element: <AllFriends />
-                            }
-                        ]
+                        loader: friendsLoader,
+                        action: friendsAction
+                        // children: [
+                            // {
+                            //     path: "",
+                            //     element: <Home />
+                            // },
+                            // {
+                            //     path: "friendrequests",
+                            //     element: <FriendRequests />
+                            // },
+                            // {
+                            //     path: "suggested",
+                            //     element: <Suggestions />,
+                            //     loader: suggestionsLoader,
+                                // children: [
+                                //     {
+                                //         path: ":suggestedProfileId",
+                                //         element: <ProfilePage />,
+                                //         loader: suggestionsLoader,
+                                //     }
+                                // ]
+                            // },
+                            // {
+                            //     path: "allfriends",
+                            //     element: <AllFriends />
+                            // }
+                        // ]
                     }
                 ]
             }
