@@ -9,11 +9,9 @@ function Post({ post, handleDisplayPostModal }) {
     };
 
     return (
-
-        <div className="grid w-screen h-screen absolute place-items-center top-0 left-0">
+        <div className="grid w-full h-full absolute place-items-center top-0 left-0">
             <div className="absolute inset-0 bg-deepSpaceBlack opacity-50"></div>
             <div onSubmit={handleCloseModal}
-
                 className="w-1/2 bg-metallicGray rounded-lg p-4 absolute grid grid-rows-[64px_auto_auto] z-50 gap-2">
                 <div className="relative flex justify-center items-center w-full border-b-2 pb-2 border-deepSpaceBlack">
                     <h2 className="text-center">{post.author.username}'s Post</h2>
@@ -53,13 +51,12 @@ function Post({ post, handleDisplayPostModal }) {
                         )}
                     </div>
                 </div>
-
                 <Form className="" method="POST">
                     <textarea
                         className="w-full px-2 bg-astronautWhite rounded-md"
                         name="content" id=""
                         placeholder="Write a comment..."></textarea>
-                        <input type="hidden" name="postId" value={post.id} />
+                    <input type="hidden" name="postId" value={post.id} />
                     <div><button className="w-full rounded-lg bg-rocketRed h-8" name="intent" value="comment" type="submit">Comment</button></div>
                 </Form>
             </div >

@@ -32,6 +32,35 @@ exports.getAllPost = asyncHandler(async (req, res) => {
             author: {
                 select: {
                     username: true,
+                    id: true
+                },
+            },
+            comments: true
+        },
+    })
+
+    res.status(200).json({ posts: getPosts })
+})
+
+
+exports.getAllUserPost = asyncHandler(async (req, res) => {
+    const getPosts = await prisma.post.findMany({
+        where: {
+            authorId: req.params.userId
+        },
+        orderBy: {
+            date: 'desc',
+        },
+        select: {
+            id: true,
+            picture: true,
+            public: true,
+            date: true,
+            caption: true,
+            author: {
+                select: {
+                    username: true,
+                    id: true
                 },
             },
             comments: true

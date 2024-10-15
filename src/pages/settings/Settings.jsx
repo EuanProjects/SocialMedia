@@ -9,7 +9,6 @@ export default function Settings() {
     // Fix this later this does not do the right thing
     const [firstName, setFirstName] = useState(names[0])
     const [lastName, setLastName] = useState(names[1])
-    console.log(names[0] !== firstName || names[1] !== lastName)
 
     function handleDisplayDeleteConfirmation() {
         setDisplayDeleteConfirmation(!displayDeleteConfirmation)

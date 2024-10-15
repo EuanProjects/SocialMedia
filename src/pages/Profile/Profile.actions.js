@@ -6,6 +6,12 @@ export async function profileAction({ request, params }) {
         return await postPost(formData, params.profileId)
     } else if (intent === "comment") {
         return await postComment(formData, params.profileId)
+    } else if (intent === "deletePost") {
+        return await deletePost(formData)
+    } else if (intent === "editPost") {
+        const postId = formData.get('postId')
+        const caption = formData.get('caption')
+        return await editPost(postId, caption)
     }
 } 
 
@@ -65,6 +71,51 @@ async function postPost(formData, profileId) {
         }
     } catch (error) {
         console.error('Failed to create post:', error);
+        return null;
+    }
+}
+
+async function deletePost(formData) {
+    const postId = formData.get('postId')
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/post/${postId}`, {
+            mode: 'cors',
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        } else {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error('Failed to delete post:', error);
+        return null;
+    }
+}
+
+async function editPost(postId, caption) {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/post/${postId}`, {
+            mode: 'cors',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                caption: caption
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        } else {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error('Failed to edit post:', error);
         return null;
     }
 }
