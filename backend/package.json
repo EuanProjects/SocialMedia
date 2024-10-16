@@ -2,11 +2,15 @@
   "name": "backend",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "test": "jest --watch --detectOpenHandles"
-  },
+  {
+    "scripts": {
+      "start": "npm run prisma:migrate && node ./bin/www",
+      "dev": "nodemon ./bin/www",
+      "test": "jest --watch --detectOpenHandles",
+      "prisma:generate": "npx prisma generate",
+      "prisma:migrate": "npx prisma migrate deploy"
+    }
+  }
   "dependencies": {
     "@prisma/client": "^5.20.0",
     "bcrypt": "^5.1.1",
