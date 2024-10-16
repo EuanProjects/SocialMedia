@@ -6,7 +6,7 @@ import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile/Profile"
 import { signupPost } from "./pages/SignUp/signup.actions";
 import { loginPost } from "./pages/Login/login.actions";
-import { profileLoader } from "./pages/Profile/profile.loaders";
+import { profileLoader } from "./pages/Profile/Profile.loaders";
 import { profileAction } from "./pages/Profile/Profile.actions";
 import Setup from "./pages/Profile/setup/Setup";
 import Feed from "./pages/Profile/feed/Feed";
