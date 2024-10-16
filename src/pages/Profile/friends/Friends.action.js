@@ -1,7 +1,6 @@
 export async function friendsAction({ request, params }) {
     const formData = await request.formData(); 
     const intent = formData.get('intent'); 
-    console.log(intent)
     if (intent === 'friend') {
         const accepterId = formData.get('id');
         const requestorId = params.profileId
@@ -14,7 +13,6 @@ export async function friendsAction({ request, params }) {
         return await postAcceptRequest(requestId)
     } else if (intent === 'removeFriend') {
         const friendId= formData.get('friendId')
-        console.log(friendId)
         const profileId = params.profileId
         return await deleteUserFriend(profileId, friendId);
     }

@@ -3,7 +3,6 @@ import UserCard from "./usercard/UserCard"
 
 export default function Suggestions() {
     const users = useLoaderData()
-    console.log(users)
     return (
         <>
             <h2>Suggestions</h2>

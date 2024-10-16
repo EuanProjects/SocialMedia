@@ -8,7 +8,6 @@ import Menu from "../components/Menu";
 function Feed() {
     const data = useLoaderData();
     const [displayPostFormModal, setDisplayPostFormModal] = useState(false);
-    console.log(data)
 
     function handleDisplayPostFormModal() {
         setDisplayPostFormModal(!displayPostFormModal)
