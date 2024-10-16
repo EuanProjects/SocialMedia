@@ -16,8 +16,6 @@ export async function signupPost ({ request }) {
             },
         });
 
-        console.log(response)
-
         if (response.ok) {
             return redirect("/login?signUpSuccessful=true")
         } else {

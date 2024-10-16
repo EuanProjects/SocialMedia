@@ -33,7 +33,6 @@ exports.deleteRequest = asyncHandler(async (req, res) => {
 
 exports.getFriendRequestsSent = asyncHandler(async (req, res) => {
   const profileId = req.params.profileId
-  console.log(profileId)
 
   const friendRequestsSent = await prisma.request.findMany({
     where: {

@@ -8,7 +8,6 @@ export async function settingsAction({ request, params }) {
     if (intent === "update") {
         return await putProfile(formData, profileId, VITE_API_URL);
     } else {
-        console.log("deleting");
         return await deleteProfile(profileId, VITE_API_URL)
     }
 }
@@ -40,7 +39,6 @@ async function putProfile(formData, profileId, VITE_API_URL) {
 }
 
 async function deleteProfile(profileId, VITE_API_URL) {
-    console.log(profileId)
     try {
         const updateResponse = await fetch(`${VITE_API_URL}/user/${profileId}`, {
             mode: 'cors',

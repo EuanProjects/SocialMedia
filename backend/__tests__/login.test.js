@@ -54,7 +54,6 @@ describe('/post', () => {
                 password: "password123"
             })
         expect(response.status).toBe(401)
-        console.log(response.body.message)
         expect(response.body).toHaveProperty('message')
     })
 });

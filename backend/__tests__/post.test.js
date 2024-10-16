@@ -74,7 +74,6 @@ describe('/post', () => {
             .get('/post')
             // .expect(200)
 
-        console.log(response.body)
         expect(response.body).toHaveProperty('posts')
     })
 

@@ -3,7 +3,6 @@ export async function suggestionsLoader() {
 }
 
 async function getUsers() {
-    console.log("getting users")
     try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/user`);
         if (!response.ok) {
